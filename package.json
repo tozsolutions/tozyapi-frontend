@@ -1,0 +1,45 @@
+{
+  "name": "tozyapi-frontend",
+  "version": "1.0.0",
+  "description": "Toz Yapı Teknolojileri Frontend - Modern web sitesi",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python3 -m http.server 8000",
+    "build": "npm run minify && npm run optimize-images",
+    "minify": "npm run minify-css && npm run minify-js",
+    "minify-css": "cleancss -o dist/css/style.min.css css/style.css",
+    "minify-js": "terser js/script.js -o dist/js/script.min.js",
+    "optimize-images": "imagemin images/**/*.{jpg,jpeg,png,svg} --out-dir=dist/images",
+    "validate-html": "html-validate index.html pages/*.html",
+    "lint-css": "stylelint css/*.css",
+    "lint-js": "eslint js/*.js",
+    "test": "npm run validate-html && npm run lint-css && npm run lint-js",
+    "deploy": "npm run build && npm run test",
+    "serve": "python3 -m http.server 8000 --directory ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tozsolutions/tozyapi-frontend.git"
+  },
+  "keywords": [
+    "panjur",
+    "kepenk",
+    "pergola",
+    "yapı sistemleri",
+    "toz yapı"
+  ],
+  "author": "Toz Yapı Teknolojileri",
+  "license": "Proprietary",
+  "devDependencies": {
+    "clean-css-cli": "^5.6.2",
+    "eslint": "^8.57.0",
+    "html-validate": "^8.9.1",
+    "imagemin-cli": "^7.0.0",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-pngquant": "^9.0.2",
+    "imagemin-svgo": "^10.0.1",
+    "stylelint": "^16.2.1",
+    "stylelint-config-standard": "^36.0.0",
+    "terser": "^5.27.0"
+  }
+}
