@@ -1,0 +1,15 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "indentation": 4,
+    "string-quotes": "single",
+    "color-hex-case": "lower",
+    "color-hex-length": "short",
+    "no-duplicate-selectors": true,
+    "selector-max-id": 1,
+    "declaration-no-important": true,
+    "property-no-vendor-prefix": null,
+    "value-no-vendor-prefix": null,
+    "custom-property-pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+  }
+}
