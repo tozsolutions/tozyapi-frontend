@@ -1,59 +1,59 @@
+# Robots.txt for Toz Yapı Teknolojileri
+
 User-agent: *
 Allow: /
 
-# Sitemap
+# Priority pages
+Allow: /index.html
+Allow: /pages/blog.html
+Allow: /css/
+Allow: /js/
+Allow: /images/
+
+# Disallow admin and sensitive areas
+Disallow: /admin/
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /.env
+Disallow: /config/
+
+# Sitemaps
 Sitemap: https://www.tozyapi.com.tr/sitemap.xml
 
-# Önemli sayfalar
-Allow: /urunler/
-Allow: /projeler/
-Allow: /hakkimizda/
-Allow: /iletisim/
-Allow: /blog/
+# Crawl delay (optional)
+Crawl-delay: 1
 
-# Arama motorları için özel yönergeler
+# Specific bot instructions
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 0
 
 User-agent: Bingbot
 Allow: /
-
-User-agent: YandexBot
-Allow: /
-
-# AI ve LLM botları için özel yönergeler
-User-agent: GPTBot
-Allow: /
 Crawl-delay: 1
 
-User-agent: ChatGPT-User
-Allow: /
+# SEO friendly URLs
+User-agent: *
+Allow: /panjur-sistemleri
+Allow: /pergola-sistemleri
+Allow: /kepenk-sistemleri
+Allow: /giyotin-cam-sistemleri
+Allow: /bioclimatic-pergola
+Allow: /havuz-kapama-cozumleri
 
-User-agent: CCBot
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-
-User-agent: Claude-Web
-Allow: /
-
-# Sosyal medya botları
-User-agent: facebookexternalhit
+# Social media crawlers
+User-agent: facebookexternalhit/1.1
 Allow: /
 
 User-agent: Twitterbot
 Allow: /
 
-# Engellenen alanlar
-Disallow: /admin/
-Disallow: /private/
-Disallow: /temp/
-Disallow: /*.pdf$
-Disallow: /search?
-Disallow: /login
-Disallow: /register
+# Block unwanted crawlers
+User-agent: AhrefsBot
+Disallow: /
 
-# Crawl delay (saniye)
-Crawl-delay: 1
+User-agent: MJ12bot
+Disallow: /
 
+User-agent: DotBot
+Disallow: /

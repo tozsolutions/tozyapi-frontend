@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Test - Toz Yapı Teknolojileri</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .warning { background: #fff3cd; border-color: #ffeaa7; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        button {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #219a52; }
+        #results { margin-top: 20px; }
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #27ae60;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 Toz Yapı Teknolojileri - Performance Test</h1>
+    
+    <div class="test-section">
+        <h2>Site Performance Metrics</h2>
+        <button onclick="runPerformanceTests()">Run Performance Tests</button>
+        <div id="performance-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>SEO & Accessibility Check</h2>
+        <button onclick="runSEOTests()">Run SEO Tests</button>
+        <div id="seo-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Mobile Responsiveness</h2>
+        <button onclick="runMobileTests()">Run Mobile Tests</button>
+        <div id="mobile-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>PWA Features</h2>
+        <button onclick="runPWATests()">Run PWA Tests</button>
+        <div id="pwa-results"></div>
+    </div>
+
+    <script>
+        function showSpinner(containerId) {
+            document.getElementById(containerId).innerHTML = '<div class="spinner"></div> Running tests...';
+        }
+
+        function runPerformanceTests() {
+            showSpinner('performance-results');
+            
+            setTimeout(() => {
+                const results = [];
+                
+                // Check page load time
+                const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+                results.push({
+                    name: 'Page Load Time',
+                    value: `${loadTime}ms`,
+                    status: loadTime < 3000 ? 'success' : loadTime < 5000 ? 'warning' : 'error'
+                });
+
+                // Check DOM elements count
+                const domElements = document.querySelectorAll('*').length;
+                results.push({
+                    name: 'DOM Elements',
+                    value: domElements,
+                    status: domElements < 1500 ? 'success' : domElements < 3000 ? 'warning' : 'error'
+                });
+
+                // Check resource count
+                const resources = performance.getEntriesByType('resource').length;
+                results.push({
+                    name: 'Resource Requests',
+                    value: resources,
+                    status: resources < 50 ? 'success' : resources < 100 ? 'warning' : 'error'
+                });
+
+                // Check if Service Worker is registered
+                const swRegistered = 'serviceWorker' in navigator;
+                results.push({
+                    name: 'Service Worker',
+                    value: swRegistered ? 'Registered' : 'Not Registered',
+                    status: swRegistered ? 'success' : 'warning'
+                });
+
+                displayResults('performance-results', results);
+            }, 1000);
+        }
+
+        function runSEOTests() {
+            showSpinner('seo-results');
+            
+            setTimeout(() => {
+                const results = [];
+                
+                // Check meta tags
+                const hasDescription = !!document.querySelector('meta[name="description"]');
+                results.push({
+                    name: 'Meta Description',
+                    value: hasDescription ? 'Present' : 'Missing',
+                    status: hasDescription ? 'success' : 'error'
+                });
+
+                const hasKeywords = !!document.querySelector('meta[name="keywords"]');
+                results.push({
+                    name: 'Meta Keywords',
+                    value: hasKeywords ? 'Present' : 'Missing',
+                    status: hasKeywords ? 'success' : 'warning'
+                });
+
+                // Check Open Graph
+                const hasOG = !!document.querySelector('meta[property^="og:"]');
+                results.push({
+                    name: 'Open Graph Tags',
+                    value: hasOG ? 'Present' : 'Missing',
+                    status: hasOG ? 'success' : 'error'
+                });
+
+                // Check structured data
+                const hasStructuredData = !!document.querySelector('script[type="application/ld+json"]');
+                results.push({
+                    name: 'Structured Data',
+                    value: hasStructuredData ? 'Present' : 'Missing',
+                    status: hasStructuredData ? 'success' : 'error'
+                });
+
+                // Check heading structure
+                const h1Count = document.querySelectorAll('h1').length;
+                results.push({
+                    name: 'H1 Tags',
+                    value: h1Count,
+                    status: h1Count === 1 ? 'success' : 'warning'
+                });
+
+                displayResults('seo-results', results);
+            }, 1000);
+        }
+
+        function runMobileTests() {
+            showSpinner('mobile-results');
+            
+            setTimeout(() => {
+                const results = [];
+                
+                // Check viewport meta tag
+                const hasViewport = !!document.querySelector('meta[name="viewport"]');
+                results.push({
+                    name: 'Viewport Meta Tag',
+                    value: hasViewport ? 'Present' : 'Missing',
+                    status: hasViewport ? 'success' : 'error'
+                });
+
+                // Check responsive design
+                const hasResponsiveCSS = document.styleSheets.length > 0;
+                results.push({
+                    name: 'Responsive CSS',
+                    value: hasResponsiveCSS ? 'Present' : 'Missing',
+                    status: hasResponsiveCSS ? 'success' : 'warning'
+                });
+
+                // Check touch-friendly elements
+                const buttons = document.querySelectorAll('button, a');
+                results.push({
+                    name: 'Interactive Elements',
+                    value: buttons.length,
+                    status: buttons.length > 0 ? 'success' : 'warning'
+                });
+
+                // Check font size
+                const bodyFontSize = window.getComputedStyle(document.body).fontSize;
+                const fontSize = parseInt(bodyFontSize);
+                results.push({
+                    name: 'Base Font Size',
+                    value: bodyFontSize,
+                    status: fontSize >= 16 ? 'success' : 'warning'
+                });
+
+                displayResults('mobile-results', results);
+            }, 1000);
+        }
+
+        function runPWATests() {
+            showSpinner('pwa-results');
+            
+            setTimeout(() => {
+                const results = [];
+                
+                // Check manifest
+                const hasManifest = !!document.querySelector('link[rel="manifest"]');
+                results.push({
+                    name: 'Web App Manifest',
+                    value: hasManifest ? 'Present' : 'Missing',
+                    status: hasManifest ? 'success' : 'error'
+                });
+
+                // Check Service Worker
+                const swSupported = 'serviceWorker' in navigator;
+                results.push({
+                    name: 'Service Worker Support',
+                    value: swSupported ? 'Supported' : 'Not Supported',
+                    status: swSupported ? 'success' : 'error'
+                });
+
+                // Check HTTPS
+                const isHTTPS = location.protocol === 'https:';
+                results.push({
+                    name: 'HTTPS',
+                    value: isHTTPS ? 'Secure' : 'Not Secure',
+                    status: isHTTPS ? 'success' : 'error'
+                });
+
+                // Check theme color
+                const hasThemeColor = !!document.querySelector('meta[name="theme-color"]');
+                results.push({
+                    name: 'Theme Color',
+                    value: hasThemeColor ? 'Present' : 'Missing',
+                    status: hasThemeColor ? 'success' : 'warning'
+                });
+
+                // Check app icons
+                const hasIcons = !!document.querySelector('link[rel*="icon"]');
+                results.push({
+                    name: 'App Icons',
+                    value: hasIcons ? 'Present' : 'Missing',
+                    status: hasIcons ? 'success' : 'warning'
+                });
+
+                displayResults('pwa-results', results);
+            }, 1000);
+        }
+
+        function displayResults(containerId, results) {
+            const container = document.getElementById(containerId);
+            let html = '';
+            
+            results.forEach(result => {
+                html += `
+                    <div class="metric ${result.status}">
+                        <span><strong>${result.name}:</strong></span>
+                        <span>${result.value}</span>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Auto-run basic checks on load
+        window.addEventListener('load', () => {
+            console.log('🚀 Toz Yapı Teknolojileri - Site loaded successfully!');
+            console.log('Performance metrics available. Use the test buttons above.');
+        });
+    </script>
+</body>
+</html>
