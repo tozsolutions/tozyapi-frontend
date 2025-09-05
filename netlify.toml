@@ -1,9 +1,41 @@
 [build]
   publish = "."
-  command = "echo 'Static site, no build needed'"
+  command = "echo 'Static site optimized and ready for deployment'"
 
 [build.environment]
   NODE_VERSION = "18"
+
+# Error pages
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+
+# Pretty URLs
+[[redirects]]
+  from = "/hakkimizda"
+  to = "/#biz-kimiz"
+  status = 301
+
+[[redirects]]
+  from = "/urunler"
+  to = "/#urunler"
+  status = 301
+
+[[redirects]]
+  from = "/projeler"
+  to = "/#projeler"
+  status = 301
+
+[[redirects]]
+  from = "/iletisim"
+  to = "/#iletisim"
+  status = 301
+
+[[redirects]]
+  from = "/blog"
+  to = "/pages/blog.html"
+  status = 301
 
 [[redirects]]
   from = "/api/*"
@@ -11,6 +43,7 @@
   status = 200
   force = true
 
+# Security and Performance Headers
 [[headers]]
   for = "/*"
   [headers.values]
@@ -18,29 +51,77 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://tozyapi-backend.onrender.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://tozyapi-backend.onrender.com; frame-ancestors 'none';"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
 
+# HTML files
+[[headers]]
+  for = "*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+# CSS files
 [[headers]]
   for = "*.css"
   [headers.values]
-    Cache-Control = "public, max-age=31536000"
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "text/css; charset=utf-8"
 
+# JavaScript files
 [[headers]]
   for = "*.js"
   [headers.values]
-    Cache-Control = "public, max-age=31536000"
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "application/javascript; charset=utf-8"
 
+# Images
 [[headers]]
   for = "*.jpg"
   [headers.values]
-    Cache-Control = "public, max-age=31536000"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.jpeg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
   for = "*.png"
   [headers.values]
-    Cache-Control = "public, max-age=31536000"
+    Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
   for = "*.svg"
   [headers.values]
-    Cache-Control = "public, max-age=31536000"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.webp"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Fonts
+[[headers]]
+  for = "*.woff"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.woff2"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Manifest and Service Worker
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+    Content-Type = "application/json; charset=utf-8"
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Content-Type = "application/javascript; charset=utf-8"
 

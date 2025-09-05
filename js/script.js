@@ -100,7 +100,27 @@ document.addEventListener('DOMContentLoaded', function() {
     loadPartnerCarousel();
     initLunaAI();
     initSmoothScrolling();
+    initMobileMenu();
+    initContactForm();
+    initLazyLoading();
+    initPerformanceOptimizations();
+    registerServiceWorker();
 });
+
+// Service Worker Registration
+function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('ServiceWorker registration successful');
+                })
+                .catch(function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+        });
+    }
+}
 
 // Ürün kartlarını yükleme
 function loadProductCards() {
@@ -353,4 +373,325 @@ function startCarouselAutoScroll() {
 window.addEventListener('load', () => {
     setTimeout(startCarouselAutoScroll, 2000);
 });
+
+// Mobile Menu Functionality
+function initMobileMenu() {
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    const navMenu = document.querySelector('nav ul');
+    const navLinks = document.querySelectorAll('nav ul li a');
+
+    if (!mobileToggle || !navMenu) return;
+
+    mobileToggle.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+        const isExpanded = navMenu.classList.contains('active');
+        mobileToggle.setAttribute('aria-expanded', isExpanded);
+        
+        // Animate hamburger icon
+        const spans = mobileToggle.querySelectorAll('span');
+        spans.forEach((span, index) => {
+            if (isExpanded) {
+                if (index === 0) span.style.transform = 'rotate(45deg) translate(5px, 5px)';
+                if (index === 1) span.style.opacity = '0';
+                if (index === 2) span.style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                span.style.transform = 'none';
+                span.style.opacity = '1';
+            }
+        });
+    });
+
+    // Close menu when clicking on links
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            mobileToggle.setAttribute('aria-expanded', 'false');
+            const spans = mobileToggle.querySelectorAll('span');
+            spans.forEach(span => {
+                span.style.transform = 'none';
+                span.style.opacity = '1';
+            });
+        });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!mobileToggle.contains(event.target) && !navMenu.contains(event.target)) {
+            navMenu.classList.remove('active');
+            mobileToggle.setAttribute('aria-expanded', 'false');
+        }
+    });
+}
+
+// Contact Form Functionality
+function initContactForm() {
+    const contactForm = document.querySelector('.contact-form form');
+    if (!contactForm) return;
+
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(contactForm);
+        const submitBtn = contactForm.querySelector('.submit-btn');
+        const originalText = submitBtn.textContent;
+        
+        // Show loading state
+        submitBtn.textContent = 'Gönderiliyor...';
+        submitBtn.disabled = true;
+        
+        try {
+            // Simulate form submission (replace with actual endpoint)
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Show success message
+            showNotification('Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.', 'success');
+            contactForm.reset();
+            
+        } catch (error) {
+            showNotification('Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.', 'error');
+        } finally {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+}
+
+// Notification System
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span>${message}</span>
+            <button class="notification-close" onclick="this.parentElement.parentElement.remove()">&times;</button>
+        </div>
+    `;
+    
+    // Add notification styles if not exists
+    if (!document.querySelector('#notification-styles')) {
+        const styles = document.createElement('style');
+        styles.id = 'notification-styles';
+        styles.textContent = `
+            .notification {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                max-width: 400px;
+                padding: 15px 20px;
+                border-radius: 8px;
+                color: white;
+                z-index: 10000;
+                animation: slideInRight 0.3s ease;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            }
+            .notification-success { background: #27ae60; }
+            .notification-error { background: #e74c3c; }
+            .notification-info { background: #3498db; }
+            .notification-content {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 15px;
+            }
+            .notification-close {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 20px;
+                cursor: pointer;
+                padding: 0;
+                width: 25px;
+                height: 25px;
+            }
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(styles);
+    }
+    
+    document.body.appendChild(notification);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.remove();
+        }
+    }, 5000);
+}
+
+// Lazy Loading for Images
+function initLazyLoading() {
+    const images = document.querySelectorAll('img[data-src]');
+    
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.remove('lazy');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+
+        images.forEach(img => imageObserver.observe(img));
+    } else {
+        // Fallback for older browsers
+        images.forEach(img => {
+            img.src = img.dataset.src;
+            img.classList.remove('lazy');
+        });
+    }
+}
+
+// Performance Optimizations
+function initPerformanceOptimizations() {
+    // Preload critical resources
+    preloadCriticalResources();
+    
+    // Initialize scroll-based animations
+    initScrollAnimations();
+    
+    // Optimize carousel performance
+    optimizeCarousels();
+}
+
+function preloadCriticalResources() {
+    const criticalImages = [
+        'images/products/URUNGRUPLARI(1).jpg',
+        'images/logos/toz-logo.png'
+    ];
+    
+    criticalImages.forEach(src => {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = src;
+        document.head.appendChild(link);
+    });
+}
+
+function initScrollAnimations() {
+    const animateElements = document.querySelectorAll('.product-card, .about-item, .project-item');
+    
+    if ('IntersectionObserver' in window) {
+        const animationObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        animateElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            animationObserver.observe(el);
+        });
+        
+        // Add animation keyframes
+        if (!document.querySelector('#scroll-animations')) {
+            const styles = document.createElement('style');
+            styles.id = 'scroll-animations';
+            styles.textContent = `
+                @keyframes fadeInUp {
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            `;
+            document.head.appendChild(styles);
+        }
+    }
+}
+
+function optimizeCarousels() {
+    const carousels = document.querySelectorAll('.project-carousel, .partner-carousel');
+    
+    carousels.forEach(carousel => {
+        // Add smooth scrolling
+        carousel.style.scrollBehavior = 'smooth';
+        
+        // Pause auto-scroll on hover
+        carousel.addEventListener('mouseenter', () => {
+            carousel.dataset.paused = 'true';
+        });
+        
+        carousel.addEventListener('mouseleave', () => {
+            carousel.dataset.paused = 'false';
+        });
+    });
+}
+
+// Enhanced Luna AI with better error handling
+function enhanceLunaAI() {
+    // Add typing indicator
+    function showTypingIndicator() {
+        const messagesContainer = document.getElementById('luna-messages');
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'luna-message luna-message-bot typing-indicator';
+        typingDiv.id = 'typing-indicator';
+        typingDiv.innerHTML = `
+            <div class="typing-dots">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        `;
+        messagesContainer.appendChild(typingDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        return typingDiv;
+    }
+    
+    function hideTypingIndicator() {
+        const indicator = document.getElementById('typing-indicator');
+        if (indicator) {
+            indicator.remove();
+        }
+    }
+    
+    // Enhanced message sending with typing indicator
+    const originalSendMessage = window.sendMessage;
+    window.sendMessage = async function() {
+        const input = document.getElementById('luna-input');
+        const message = input.value.trim();
+        
+        if (!message) return;
+
+        // Add user message
+        addMessage(message, 'user');
+        input.value = '';
+
+        // Show typing indicator
+        const typingIndicator = showTypingIndicator();
+
+        try {
+            const response = await fetch('/api/luna/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: message })
+            });
+
+            const data = await response.json();
+            
+            // Hide typing indicator
+            hideTypingIndicator();
+            
+            if (data.response) {
+                addMessage(data.response, 'bot');
+            } else {
+                addMessage('Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.', 'bot');
+            }
+        } catch (error) {
+            hideTypingIndicator();
+            addMessage('Bağlantı hatası. Lütfen daha sonra tekrar deneyin.', 'bot');
+        }
+    };
+}
 

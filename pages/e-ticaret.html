@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Ticaret - Toz Yapı Teknolojileri</title>
+    <meta name="description" content="Toz Yapı Teknolojileri online mağazası. Panjur, pergola, kepenk sistemleri online satış ve hızlı teslimat.">
+    <meta name="keywords" content="panjur satış, pergola online, kepenk e-ticaret, yapı sistemleri online">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .ecommerce-hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('../images/products/URUNGRUPLARI(1).jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 150px 0 100px 0;
+            text-align: center;
+            color: white;
+        }
+        .ecommerce-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .ecommerce-content {
+            padding: 100px 0;
+        }
+        .coming-soon {
+            text-align: center;
+            padding: 100px 0;
+            background: #f8f9fa;
+        }
+        .coming-soon h2 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .coming-soon p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .notify-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .notify-form input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .notify-form button {
+            width: 100%;
+            padding: 15px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .notify-form button:hover {
+            background: #219a52;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+        .feature-item {
+            text-align: center;
+            padding: 30px 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header role="banner">
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../images/logos/toz-logo.png" alt="Toz Yapı Teknolojileri - Ana Sayfa" width="200" height="50">
+                </a>
+            </div>
+            <nav role="navigation" aria-label="Ana navigasyon">
+                <ul role="menubar">
+                    <li role="none"><a href="../index.html#biz-kimiz" role="menuitem">Biz Kimiz</a></li>
+                    <li role="none"><a href="../index.html#urunler" role="menuitem">Ürünler</a></li>
+                    <li role="none"><a href="../index.html#projeler" role="menuitem">Projeler</a></li>
+                    <li role="none"><a href="e-ticaret.html" role="menuitem" class="active">E-Ticaret</a></li>
+                    <li role="none"><a href="blog.html" role="menuitem">Blog</a></li>
+                    <li role="none"><a href="../index.html#iletisim" role="menuitem">İletişim</a></li>
+                </ul>
+            </nav>
+            <div class="language-selector" aria-label="Dil seçimi">
+                <button class="mobile-menu-toggle" aria-label="Mobil menüyü aç/kapat" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main role="main">
+        <section class="ecommerce-hero">
+            <div class="container">
+                <h1>Online Mağazamız</h1>
+                <p>Kaliteli ürünlerimizi artık online olarak da satın alabilirsiniz</p>
+            </div>
+        </section>
+
+        <section class="coming-soon">
+            <div class="container">
+                <h2>🚀 Çok Yakında!</h2>
+                <p>
+                    E-ticaret platformumuz üzerinde çalışmalarımız devam ediyor. 
+                    Panjur, pergola, kepenk ve giyotin cam sistemlerimizi online olarak 
+                    satın alabileceğiniz platformumuz çok yakında hizmetinizde olacak.
+                </p>
+                
+                <div class="notify-form">
+                    <h3>Haberdar Olmak İster misiniz?</h3>
+                    <form id="notify-form">
+                        <input type="email" placeholder="E-posta adresiniz" required>
+                        <button type="submit">Beni Bilgilendir</button>
+                    </form>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🚚</div>
+                        <h3>Hızlı Teslimat</h3>
+                        <p>Türkiye geneli hızlı ve güvenli teslimat</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💳</div>
+                        <h3>Güvenli Ödeme</h3>
+                        <p>256-bit SSL sertifikası ile güvenli ödeme</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔧</div>
+                        <h3>Montaj Hizmeti</h3>
+                        <p>Uzman ekibimizle profesyonel montaj</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📞</div>
+                        <h3>7/24 Destek</h3>
+                        <p>Müşteri hizmetlerimiz her zaman yanınızda</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="../images/logos/toz-logo.png" alt="Toz Yapı Teknolojileri Logo" width="150" height="40">
+                    <p>KEŞFEDİN! "Belki de ihtiyacınız olan ürün burada"</p>
+                </div>
+                <div class="footer-contact">
+                    <h4>İletişim</h4>
+                    <address>
+                        <p><strong>Marka:</strong> Toz Yapı Teknolojileri</p>
+                        <p><strong>Adres:</strong> Üniversiteler Mah. 1597. Cad Bilkent Center AVM No:3 Bilkent Çankaya ANKARA</p>
+                        <p><strong>Telefon:</strong> <a href="tel:+905367731404">+90 536 773 14 04</a></p>
+                        <p><strong>E-posta:</strong> <a href="mailto:merhaba@tozyapi.com.tr">merhaba@tozyapi.com.tr</a></p>
+                    </address>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Toz Yapı Teknolojileri. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js" defer></script>
+    <script>
+        document.getElementById('notify-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            
+            // Simulate form submission
+            const button = this.querySelector('button');
+            const originalText = button.textContent;
+            button.textContent = 'Kaydediliyor...';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                alert('Teşekkürler! E-ticaret platformumuz açıldığında size haber vereceğiz.');
+                this.reset();
+                button.textContent = originalText;
+                button.disabled = false;
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
