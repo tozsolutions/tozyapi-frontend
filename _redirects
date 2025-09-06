@@ -1,2 +1,46 @@
-/api/* https://tozyapi-backend.onrender.com/api/:splat 200
+# Netlify Redirects for Toz Yapı Teknolojileri
 
+# API proxy to backend
+/api/*  https://tozyapi-backend.onrender.com/api/:splat  200
+
+# Pretty URLs and SEO redirects
+/hakkimizda                    /#biz-kimiz                   301
+/urunler                       /#urunler                     301
+/projeler                      /#projeler                    301
+/iletisim                      /#iletisim                    301
+/blog                          /pages/blog.html              301
+/e-ticaret                     /pages/e-ticaret.html         301
+
+# Product specific redirects
+/panjur-sistemleri             /#urunler                     301
+/pergola-sistemleri            /#urunler                     301
+/kepenk-sistemleri             /#urunler                     301
+/giyotin-cam-sistemleri        /#urunler                     301
+/bioclimatic-pergola           /#urunler                     301
+/havuz-kapama-cozumleri        /#urunler                     301
+/dis-cephe-jaluzileri          /#urunler                     301
+/otomatik-kapi-sistemleri      /#urunler                     301
+/zip-perde-sistemleri          /#urunler                     301
+/kis-bahcesi                   /#urunler                     301
+
+# City-specific landing pages (future implementation)
+/ankara-panjur-sistemleri      /#urunler                     301
+/istanbul-kepenk-sistemleri    /#urunler                     301
+/izmir-pergola-sistemleri      /#urunler                     301
+
+# Service pages
+/hizmetler/montaj              /#iletisim                    301
+/hizmetler/bakim-onarim        /#iletisim                    301
+/hizmetler/proje-danismanligi  /#iletisim                    301
+
+# Legacy URLs (if any)
+/home                          /                             301
+/index.php                     /                             301
+/index.htm                     /                             301
+
+# Force HTTPS
+http://tozyapi.netlify.app/*   https://tozyapi.netlify.app/:splat  301!
+http://www.tozyapi.com.tr/*    https://www.tozyapi.com.tr/:splat   301!
+
+# 404 fallback
+/*  /404.html  404
